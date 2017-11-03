@@ -1,0 +1,48 @@
+*{
+	display: flex;
+	margin: 0;
+	padding: 0;
+}
+
+#your_choise_plus_buying_person_info{
+	flex-direction: row !important;
+	padding: auto;
+	background-color: #FFFFFF;
+	flex: 2;
+	width: 100%;
+}
+
+#form, #form > p, #choised_products, #buying_person_info, #your_choise, .choised_product_info{	
+	flex-direction: column;
+}
+#your_choise, #buying_person_info{
+	padding: 55px;
+}
+
+.choised_product_info, #choised_products{
+	margin: auto;
+	padding: 15px;
+}
+
+.choised_product{
+	padding: 15px;	
+}
+
+.choised_product button{
+	height: 10px;
+	width: 10px;
+	padding: 0px !important;
+	text-align: center;
+}
+
+#form, #form > p, #choised_products, #buying_person_info{
+	justify-content: space-between;
+	padding-bottom: 10px;
+}
+
+#your_choise{
+	flex: 2;
+}
+#buying_person_info{
+	flex: 1;
+}
