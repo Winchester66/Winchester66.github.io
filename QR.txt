@@ -1,0 +1,63 @@
+matrix = [1 2, 2 1];
+    
+vector = [3 3];
+
+
+[sing,m,m1,m2]=qrdecomp(matrix);
+display(sing)
+display(m)
+display(m1)
+display(m2)
+if sing == 0
+    x = qrsolve(m,m1,m2,vector)
+end
+
+function [sing,M,M1,M2] = qrdecomp( M )
+    n=length(M); M1=zeros(1,n); M2=zeros(1,n);
+    sing=false;
+    for k=1:(n-1)
+        m=max(abs(M(k:n,k)));
+        if(m==0)
+            M1(k)=0;
+            M2(k)=0;
+            sing=true;
+        else 
+            M(k:n,k)=M(k:n,k)./m;
+            q=sign(M(k,k))*sqrt(sum( M(k:n, k).^2));
+            M(k,k)=M(k,k)+q;
+            M1(k)=q*M(k,k);
+            M2(k)=(-m)*q;
+            for j=(k+1):n
+                t=sum(M(k:n,k).*M(k:n,j))/M1(k);
+                M(k:n,j) = M(k:n,j)- M(k:n,k).*t;
+            end
+        end
+    end
+    if M(n,n) == 0
+        sing = true;
+    end 
+        M2(n) = M(n,n);
+    
+end
+
+function [ x ] = qrsolve( M, M1, M2, b )
+n = length(b); 
+x = zeros(1,n);
+    b = reshape(b,[],1);
+        for j = 1:(n-1)
+            t = sum(M(j:n,j).*b(j:n))/M1(j);
+            b(j:n) = b(j:n) - M(j:n,j).*t;
+        end
+        x = rsolve(M,M2,b);
+end
+
+
+function [x] = rsolve( M,M2,b)
+    n=length(b);
+    b=reshape(b,1,[]);
+    b(n)=b(n)/M2(n);
+    for i=n-1:-1:1
+        b(i)=(b(i)-sum(M(i,i+1:n).*b(i+1:n)))/M2(i);
+    end
+    x=b;
+end
